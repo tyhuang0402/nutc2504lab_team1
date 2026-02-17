@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: tenant-a-quota
+  namespace: tenant-a
+spec:
+  hard:
+    # === CPU 與記憶體限制 ===
+    requests.cpu: "4"           # 最多申請 4 個 CPU 核心
+    requests.memory: "8Gi"      # 最多申請 8GB 記憶體
+    limits.cpu: "8"             # 最多使用 8 個 CPU 核心
+    limits.memory: "16Gi"       # 最多使用 16GB 記憶體
+    
+    # === GPU 限制（模擬，Minikube 沒有真實 GPU）===
+    # requests.nvidia.com/gpu: "2"
+    # limits.nvidia.com/gpu: "2"
+    
+    # === Pod 數量限制 ===
+    pods: "10"                  # 最多 10 個 Pod
+    
+    # === 儲存限制 ===
+    requests.storage: "50Gi"    # 最多申請 50GB 儲存
+    persistentvolumeclaims: "5" # 最多 5 個 PVC
+    
+    # === Service 限制 ===
+    services: "5"
+    services.loadbalancers: "2"
+---
+# LimitRange - 設定單個 Pod 的預設值與上下限
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: tenant-a-limits
+  namespace: tenant-a
+spec:
+  limits:
+  - max:
+      cpu: "2"          # 單個 Pod 最多用 2 CPU
+      memory: "4Gi"     # 單個 Pod 最多用 4GB RAM
+    min:
+      cpu: "100m"       # 單個 Pod 至少用 0.1 CPU
+      memory: "128Mi"   # 單個 Pod 至少用 128MB RAM
+    default:            # 預設值（如果 Pod 沒指定）
+      cpu: "500m"
+      memory: "1Gi"
+    defaultRequest:     # 預設申請值
+      cpu: "250m"
+      memory: "512Mi"
+    type: Container
+  - max:
+      cpu: "4"          # 單個 Pod 總量上限
+      memory: "8Gi"
+    type: Pod

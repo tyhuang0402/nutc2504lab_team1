@@ -1,0 +1,53 @@
+# Tenant A 的 LiteLLM 配置
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: litellm-config
+  namespace: tenant-a
+data:
+  config.yaml: |
+    model_list:
+      - model_name: gpt-3.5-turbo
+        litellm_params:
+          model: gpt-3.5-turbo
+          api_key: "os.environ/OPENAI_API_KEY"
+      - model_name: claude-3-sonnet
+        litellm_params:
+          model: anthropic/claude-3-sonnet-20240229
+          api_key: "os.environ/ANTHROPIC_API_KEY"
+    
+    general_settings:
+      master_key: "sk-tenant-a-master-key-12345"
+      database_url: "sqlite:///litellm.db"
+      
+    litellm_settings:
+      drop_params: true
+      set_verbose: true
+      
+    router_settings:
+      routing_strategy: simple-shuffle
+      num_retries: 3
+---
+# Tenant B 的 LiteLLM 配置
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: litellm-config
+  namespace: tenant-b
+data:
+  config.yaml: |
+    model_list:
+      - model_name: gpt-3.5-turbo
+        litellm_params:
+          model: gpt-3.5-turbo
+          api_key: "os.environ/OPENAI_API_KEY"
+    
+    general_settings:
+      master_key: "sk-tenant-b-master-key-67890"
+      database_url: "sqlite:///litellm.db"
+      
+    litellm_settings:
+      drop_params: true
+      
+    router_settings:
+      routing_strategy: simple-shuffle
