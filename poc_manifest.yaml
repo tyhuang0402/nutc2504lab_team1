@@ -12,6 +12,9 @@ kind: Namespace
 metadata:
   name: tenant-b
 ---
+
+
+
 # 2) ResourceQuotas (模擬包含 nvidia.com/gpu)
 apiVersion: v1
 kind: ResourceQuota
@@ -39,6 +42,9 @@ spec:
     limits.memory: 3Gi
     requests.nvidia.com/gpu: "1"
 ---
+
+
+
 # 3) llm-stub (簡單 HTTP server that triggers metrics-emitter)
 apiVersion: v1
 kind: ConfigMap
@@ -106,6 +112,9 @@ spec:
     port: 8080
     targetPort: 8080
 ---
+
+
+
 # 4) mock metrics-emitter (exposes Prometheus metrics like dcgm_* and accepts POST /emit)
 apiVersion: v1
 kind: ConfigMap
@@ -174,6 +183,9 @@ spec:
     port: 9100
     targetPort: 9100
 ---
+
+
+
 # 5) Prometheus ServiceMonitor (讓 kube-prometheus 抓 metrics-emitter)
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -193,6 +205,9 @@ spec:
   - port: metrics
     interval: 15s
 ---
+
+
+
 # 6) Simple NetworkPolicy for tenant namespaces to prevent ingress from other namespaces
 #    (k8s NetworkPolicy; 如果你安裝了 Cilium，Cilium 也會尊重這些或可以換成 CiliumNetworkPolicy)
 apiVersion: networking.k8s.io/v1
@@ -221,6 +236,9 @@ spec:
   - from:
     - podSelector: {}
 ---
+
+
+
 # 7) Kong CRD examples (KongConsumer + KongPlugin + Ingress)
 #    NOTE: Kong CRDs must be available (installed by Kong helm chart). 
 apiVersion: configuration.konghq.com/v1

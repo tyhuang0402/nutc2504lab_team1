@@ -1,5 +1,6 @@
 # K8s 診斷腳本
 # 檢查各種可能的問題
+# Produced by Claude Sonnet
 
 Write-Host "=== Kubernetes 環境診斷 ===" -ForegroundColor Cyan
 
