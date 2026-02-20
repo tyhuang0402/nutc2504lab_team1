@@ -100,8 +100,8 @@ kubectl port-forward svc/litellm 4000:4000 -n lite
 ## 3️⃣ Apply Tenant Resource Quota
 
 ```bash
-kubectl apply -n tenant-a -f k8s/tenant/resourcequota.yaml
-kubectl apply -n tenant-b -f k8s/tenant/resourcequota.yaml
+kubectl apply -n tenant-a -f quotas/resourcequota.yaml
+kubectl apply -n tenant-b -f quotas/resourcequota.yaml
 ```
 
 Verify:
@@ -115,7 +115,7 @@ kubectl describe quota -n tenant-a
 ## 4️⃣ Deploy Fake GPU Metrics Exporter
 
 ```bash
-kubectl apply -f k8s/dcgm/fake-gpu.yaml
+kubectl apply -f dcgm/fake-gpu.yaml
 ```
 
 Check metrics endpoint:
@@ -132,7 +132,7 @@ curl localhost:9400/metrics
 Apply ServiceMonitor:
 
 ```bash
-kubectl apply -f k8s/monitoring/servicemonitor.yaml
+kubectl apply -f monitoring/servicemonitor.yaml
 ```
 
 Verify in Prometheus UI:

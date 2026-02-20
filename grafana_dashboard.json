@@ -13,7 +13,7 @@
           "name": "namespace",
           "label": "Namespace",
           "type": "query",
-          "datasource": "Prometheus",
+          "datasource": "",
           "query": "label_values(dcgm_gpu_utilization, namespace)",
           "includeAll": false,
           "multi": false,
@@ -26,7 +26,7 @@
         "type": "timeseries",
         "title": "Per-tenant GPU Utilization (avg)",
         "gridPos": { "x": 0, "y": 0, "w": 24, "h": 9 },
-        "datasource": "Prometheus",
+        "datasource": "",
         "targets": [
           {
             "expr": "avg by (namespace) (dcgm_gpu_utilization)",
@@ -44,7 +44,7 @@
         "type": "stat",
         "title": "Selected Namespace Current GPU Utilization",
         "gridPos": { "x": 0, "y": 9, "w": 12, "h": 5 },
-        "datasource": "Prometheus",
+        "datasource": "",
         "targets": [
           {
             "expr": "dcgm_gpu_utilization{namespace=\"$namespace\"}",
@@ -64,7 +64,7 @@
         "type": "gauge",
         "title": "Selected Namespace GPU Utilization (Gauge)",
         "gridPos": { "x": 12, "y": 9, "w": 12, "h": 5 },
-        "datasource": "Prometheus",
+        "datasource": "",
         "targets": [
           {
             "expr": "dcgm_gpu_utilization{namespace=\"$namespace\"}",
