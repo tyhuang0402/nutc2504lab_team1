@@ -1,0 +1,26 @@
+# This deployment will exceed the quota
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cpu-test
+  namespace: tenant-a
+spec:
+  replicas: 20
+  selector:
+    matchLabels:
+      app: cpu-test
+  template:
+    metadata:
+      labels:
+        app: cpu-test
+    spec:
+      containers:
+      - name: cpu
+        image: nginx
+        resources:
+          requests:
+            cpu: "500m"
+            memory: 512Mi
+          limits:
+            cpu: "1"
+            memory: 1Gi
