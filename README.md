@@ -8,16 +8,6 @@
 
 # DocAI Multi-Tenancy PoC on Kubernetes
 
-本專案為「算力管理與多租戶模組」招募測試任務的驗證原型，目標展示：
-
-* 多租戶資源隔離
-* API Key → 租戶 → 算力配額聯動
-* LLM Gateway 統一入口
-* GPU 使用率監控（可用 fake / real GPU）
-* 可擴展至多叢集管理架構
-
----
-
 # Architecture
 
 ```
